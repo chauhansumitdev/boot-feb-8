@@ -18,12 +18,12 @@ public class CustomerController {
     @Autowired
     private CustomerService customerService;
 
-    @PostMapping("/v1/create")
-    public Customer createCustomers(Customer customer){
+    @PostMapping("/v1/create") // testing 
+    public Customer createCustomers(@RequestBody Customer customer){
         return customerService.createCustomer(customer);
     }
 
-    @GetMapping("/v1")
+    @GetMapping("/v1") // testing
     public List<Customer> getCustomer(){
         return customerService.getCustomers();
     }
