@@ -31,7 +31,7 @@ public class OrderController {
     }
 
 
-    @PutMapping("/v1/update/{id")
+    @PutMapping("/v1/update/{id}")
     public ResponseEntity<Order> updateOrder(@PathVariable UUID id, @RequestBody Order order){
         return new ResponseEntity<>(orderService.updateOrder(id, order), HttpStatus.OK);
     }
