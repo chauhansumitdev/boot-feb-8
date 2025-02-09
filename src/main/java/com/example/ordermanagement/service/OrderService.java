@@ -30,6 +30,7 @@ public class OrderService {
             existingOrder.setOrderNumber(order.getOrderNumber());
             existingOrder.setStatus(order.getStatus());
             existingOrder.setCustomer(order.getCustomer());
+            orderRepository.save(existingOrder);
         }
 
         return existingOrder;
