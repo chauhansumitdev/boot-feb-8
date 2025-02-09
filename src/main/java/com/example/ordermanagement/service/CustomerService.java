@@ -4,6 +4,10 @@ package com.example.ordermanagement.service;
 import com.example.ordermanagement.entity.Customer;
 import com.example.ordermanagement.repository.CustomerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -44,5 +48,19 @@ public class CustomerService {
 
     public void deleteCustomer(UUID id){
         customerRepository.deleteById(id);
+    }
+
+
+    public List<Customer> filterByEmail(String email){
+        return customerRepository.findByEmailContainingIgnoreCase(email);
+    }
+
+    public List<Customer> filterByFirstName(String name){
+        return customerRepository.findByFirstNameContainingIgnoreCase(name);
+    }
+
+    public Page<Customer> getCustomers(String firstName, String email, int page, int size, String sortBy) {
+        Pageable pageable = PageRequest.of(page, size, Sort.by(sortBy));
+        return customerRepository.findByFirstNameContainingIgnoreCaseAndEmailContainingIgnoreCase(firstName, email, pageable);
     }
 }

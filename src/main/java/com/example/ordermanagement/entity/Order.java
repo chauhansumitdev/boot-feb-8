@@ -13,7 +13,7 @@ public class Order {
     @JsonProperty("id")
     private UUID id;
 
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     @JsonProperty("orderNumber")
     private Long orderNumber;
 

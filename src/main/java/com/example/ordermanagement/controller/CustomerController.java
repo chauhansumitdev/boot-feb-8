@@ -5,6 +5,7 @@ import com.example.ordermanagement.entity.Customer;
 import com.example.ordermanagement.service.CustomerService;
 import org.apache.coyote.Response;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -24,9 +25,14 @@ public class CustomerController {
         return new ResponseEntity<>(customerService.createCustomer(customer), HttpStatus.CREATED);
     }
 
-    @GetMapping("/v1/fetch-all")
-    public ResponseEntity<List<Customer>> getAllCustomer(){
-        return new ResponseEntity<>(customerService.getAllCustomers(), HttpStatus.OK);
+    @GetMapping("/v1/filter/{firstName}")
+    public ResponseEntity<List<Customer>> filterByFirstName(@PathVariable  String firstName){
+        return new ResponseEntity<>(customerService.filterByFirstName(firstName), HttpStatus.OK);
+    }
+
+    @GetMapping("/v1/filter/{email}")
+    public ResponseEntity<List<Customer>> filterByEmail(@PathVariable String email){
+        return new ResponseEntity<>(customerService.filterByEmail(email), HttpStatus.OK);
     }
 
 
@@ -45,5 +51,16 @@ public class CustomerController {
     public ResponseEntity<Void> deleteCustomer(@PathVariable UUID id) {
         customerService.deleteCustomer(id);
         return ResponseEntity.noContent().build();
+    }
+
+    @GetMapping("/v1/list")
+    public Page<Customer> getCustomers(
+            @RequestParam(defaultValue = "") String firstName,
+            @RequestParam(defaultValue = "") String email,
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int size,
+            @RequestParam(defaultValue = "firstName") String sortBy) {
+
+        return customerService.getCustomers(firstName, email, page, size, sortBy);
     }
 }
