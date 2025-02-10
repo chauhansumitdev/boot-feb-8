@@ -2,6 +2,7 @@ package com.example.ordermanagement.entity;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
 import lombok.Data;
 import java.util.UUID;
 
@@ -15,9 +16,11 @@ public class Order {
 
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     @JsonProperty("orderNumber")
+    @NotBlank(message = "Please enter the order number")
     private Long orderNumber;
 
     @JsonProperty("status")
+    @NotBlank(message = "Please enter the status")
     private String status;
 
     @ManyToOne

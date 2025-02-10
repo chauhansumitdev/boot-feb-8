@@ -2,7 +2,9 @@ package com.example.ordermanagement.entity;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
 import lombok.Data;
+import lombok.NonNull;
 
 import java.util.UUID;
 
@@ -16,9 +18,11 @@ public class Address {
     private UUID id;
 
     @JsonProperty("street")
+    @NotBlank(message = "Please enter the the street name")
     private String street;
 
     @JsonProperty("city")
+    @NotBlank(message = "Please enter the city name")
     private String city;
 
     public UUID getId() {

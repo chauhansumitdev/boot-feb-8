@@ -59,5 +59,4 @@ public class ProductService {
         Pageable pageable = PageRequest.of(page, size, sort);
         return productRepository.findAll(pageable);
     }
-
 }

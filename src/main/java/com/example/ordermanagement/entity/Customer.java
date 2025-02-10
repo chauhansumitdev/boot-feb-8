@@ -2,7 +2,10 @@ package com.example.ordermanagement.entity;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
 import lombok.Data;
+import lombok.NonNull;
+
 import java.util.UUID;
 
 @Entity
@@ -14,12 +17,15 @@ public class Customer {
     private UUID id;
 
     @JsonProperty("firstName")
+    @NotBlank(message = "Please enter the firstName")
     private String firstName;
 
     @JsonProperty("lastName")
+    @NotBlank(message = "Please enter the lastName")
     private String lastName;
 
     @JsonProperty("email")
+    @NotBlank(message = "Please enter the email")
     private String email;
 
     @OneToOne(cascade = CascadeType.ALL)

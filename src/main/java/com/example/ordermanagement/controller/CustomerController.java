@@ -63,4 +63,9 @@ public class CustomerController {
 
         return customerService.getCustomers(firstName, email, page, size, sortBy);
     }
+
+    @GetMapping("/v1/fetch-all")
+    public List<Customer> getAllCustomer(){
+        return customerService.getAllCustomers();
+    }
 }

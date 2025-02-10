@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
+import java.util.List;
 import java.util.UUID;
 
 @Service
@@ -60,4 +61,13 @@ public class OrderProductService {
         orderProductRepository.deleteById(id);
     }
 
+    public List<OrderProduct> getAllOrderProduct(){
+        return orderProductRepository.findAll();
+    }
+
+
+    public List<OrderProduct> getAllProductsInParticularOrder(UUID id) {
+        Order retrieveOrder = orderService.readOrder(id);
+        return orderProductRepository.findByOrder(retrieveOrder);
+    }
 }

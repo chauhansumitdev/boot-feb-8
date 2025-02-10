@@ -11,6 +11,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.UUID;
 
 @RestController
@@ -22,7 +23,7 @@ public class OrderProductController {
 
 
     @PostMapping("/v1/create/{orderID}/add/{productID}")
-    public ResponseEntity<OrderProduct> createOrderProduct(@PathVariable UUID orderID, @PathVariable UUID productID){
+    public ResponseEntity<OrderProduct> createOrderProduct(@PathVariable UUID orderID, @PathVariable UUID productID) {
 
         return new ResponseEntity<>(orderProductService.createOrderProduct(orderID, productID), HttpStatus.CREATED);
     }
@@ -38,5 +39,15 @@ public class OrderProductController {
     public ResponseEntity<Void> deleteOrderProduct(@PathVariable UUID id) {
         orderProductService.deleteOrderProduct(id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
+
+    @GetMapping("/v1/find-all")
+    public ResponseEntity<List<OrderProduct>> getAll() {
+        return new ResponseEntity<>(orderProductService.getAllOrderProduct(), HttpStatus.OK);
+    }
+
+    @GetMapping("/v1/find/{id}")
+    public ResponseEntity<List<OrderProduct>> getAllByOrderId(@PathVariable UUID id) {
+        return new ResponseEntity<>(orderProductService.getAllProductsInParticularOrder(id), HttpStatus.OK);
     }
 }

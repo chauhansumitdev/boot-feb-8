@@ -1,16 +1,15 @@
 package com.example.ordermanagement.controller;
 
-
 import com.example.ordermanagement.entity.Order;
 import com.example.ordermanagement.service.OrderService;
-import org.apache.coyote.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.RequestEntity;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.UUID;
 
 @RestController
@@ -69,5 +68,10 @@ public class OrderController {
             @RequestParam(defaultValue = "asc") String direction) {
 
         return orderService.getOrders(page, size, sortBy, direction);
+    }
+
+    @GetMapping("/v1/find/{id}")
+    public ResponseEntity<List<Order>> getOrdersByCustomer(@PathVariable UUID id){
+        return new ResponseEntity<>(orderService.getOrdersByCustomer(id), HttpStatus.OK);
     }
 }

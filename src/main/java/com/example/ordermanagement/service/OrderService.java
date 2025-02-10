@@ -89,6 +89,6 @@ public class OrderService {
 
     public List<Order> getOrdersByCustomer(UUID customerId) {
         Customer customer = customerService.getCustomer(customerId) ;
-        return customer != null ? orderRepository.findByCustomer(customer) : List.of();
+        return orderRepository.findByCustomer(customer);
     }
 }
