@@ -3,6 +3,7 @@ package com.example.ordermanagement.service;
 
 import com.example.ordermanagement.entity.Customer;
 import com.example.ordermanagement.entity.Order;
+import com.example.ordermanagement.exception.OrderException;
 import com.example.ordermanagement.repository.OrderRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -35,17 +36,23 @@ public class OrderService {
     }
 
 
-
-    public Order createOrder(Order order){
-        return orderRepository.save(order);
-    }
-
     public Order readOrder(UUID id){
-        return orderRepository.findById(id).orElse(null);
+        Order order = orderRepository.findById(id).orElse(null);
+
+        if(order == null){
+            throw  new OrderException("Order does not exist");
+        }
+
+        return order;
     }
 
     public Order updateOrder(UUID id, Order order){
         Order existingOrder = orderRepository.findById(id).orElse(null);
+
+        if(existingOrder == null){
+            throw new OrderException("Order does not exist");
+        }
+
 
         if(existingOrder != null){
             existingOrder.setOrderNumber(order.getOrderNumber());
@@ -60,8 +67,12 @@ public class OrderService {
     public Order updateOrder(UUID id, String status){
         Order existingOrder = orderRepository.findById(id).orElse(null);
 
+        if(existingOrder == null){
+            throw new OrderException("Order does not exist");
+        }
+
         if(existingOrder.getStatus().equals("DELIVERED")){
-            return null;
+            throw new OrderException("Order already delivered");
         }
 
         if(existingOrder != null){

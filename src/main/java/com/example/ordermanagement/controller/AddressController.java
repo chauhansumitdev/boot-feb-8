@@ -1,6 +1,8 @@
 package com.example.ordermanagement.controller;
 
 import com.example.ordermanagement.entity.Address;
+import com.example.ordermanagement.exception.AddressException;
+import com.example.ordermanagement.exception.ErrorResponse;
 import com.example.ordermanagement.service.AddressService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -35,5 +37,11 @@ public class AddressController {
     public ResponseEntity<Void> deleteAddress(@PathVariable UUID id) {
         addressService.deleteAddress(id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
+
+    @ExceptionHandler(value = AddressException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public ErrorResponse addressException(AddressException ex) {
+        return new ErrorResponse(ex.getMessage(), HttpStatus.BAD_REQUEST.value());
     }
 }

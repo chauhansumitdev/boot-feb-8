@@ -2,6 +2,7 @@ package com.example.ordermanagement.service;
 
 
 import com.example.ordermanagement.entity.Address;
+import com.example.ordermanagement.exception.AddressException;
 import com.example.ordermanagement.repository.AddressRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -19,7 +20,13 @@ public class AddressService {
     }
 
     public Address readAddress(UUID id){
-        return addressRepository.findById(id).orElse(null);
+        Address address = addressRepository.findById(id).orElse(null);
+
+        if(address == null){
+            throw new AddressException("Address not found");
+        }
+
+        return address;
     }
 
     public Address updateAddress(UUID id, Address address){
@@ -31,6 +38,10 @@ public class AddressService {
             existingAddress.setCity(address.getCity());
             addressRepository.save(existingAddress);
 
+        }
+
+        if(existingAddress == null){
+            throw  new AddressException("Address does not exist");
         }
 
         return existingAddress;

@@ -1,6 +1,9 @@
 package com.example.ordermanagement.controller;
 
 import com.example.ordermanagement.entity.Product;
+import com.example.ordermanagement.exception.AddressException;
+import com.example.ordermanagement.exception.ErrorResponse;
+import com.example.ordermanagement.exception.ProductException;
 import com.example.ordermanagement.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -62,5 +65,12 @@ public class ProductController {
             @RequestParam(defaultValue = "10") int size,
             @RequestParam(defaultValue = "asc") String sortDirection) {
         return productService.getProductsSortedByPrice(page, size, sortDirection);
+    }
+
+
+    @ExceptionHandler(value = ProductException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public ErrorResponse productException(ProductException ex) {
+        return new ErrorResponse(ex.getMessage(), HttpStatus.BAD_REQUEST.value());
     }
 }

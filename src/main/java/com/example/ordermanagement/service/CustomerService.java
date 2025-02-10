@@ -1,7 +1,11 @@
 package com.example.ordermanagement.service;
 
 
+import com.example.ordermanagement.dto.CustomerRequestDTO;
+import com.example.ordermanagement.dto.CustomerResponseDTO;
 import com.example.ordermanagement.entity.Customer;
+import com.example.ordermanagement.exception.CustomerException;
+import com.example.ordermanagement.mapper.CustomerMapper;
 import com.example.ordermanagement.repository.CustomerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -18,9 +22,17 @@ public class CustomerService {
 
     @Autowired
     private CustomerRepository customerRepository;
+    @Autowired
+    private CustomerMapper customerMapper;
 
-    public Customer createCustomer(Customer customer){
-        return customerRepository.save(customer);
+
+    public CustomerResponseDTO createCustomer(CustomerRequestDTO customer){
+
+        Customer request = customerMapper.toCustomer(customer);
+
+        Customer response =  customerRepository.save(request);
+
+        return customerMapper.toCustomerDTO(response);
     }
 
     public List<Customer> getAllCustomers(){
@@ -28,11 +40,21 @@ public class CustomerService {
     }
 
     public Customer getCustomer(UUID id){
-        return customerRepository.findById(id).orElse(null);
+        Customer customer =  customerRepository.findById(id).orElse(null);
+
+        if(customer == null){
+            throw  new CustomerException("Customer not found");
+        }
+
+        return customer;
     }
 
     public Customer updateCustomer(UUID id, Customer customer){
         Customer existingCustomer = customerRepository.findById(id).orElse(null);
+
+        if(existingCustomer == null){
+            throw new CustomerException("Customer does not exit");
+        }
 
         if(existingCustomer != null){
             existingCustomer.setFirstName(customer.getFirstName());

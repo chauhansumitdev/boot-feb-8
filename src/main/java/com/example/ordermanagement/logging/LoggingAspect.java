@@ -11,12 +11,43 @@ import java.util.UUID;
 public class LoggingAspect {
 
     @Before("execution(* com.example.ordermanagement.controller.CustomerController.*(..))")
-    public void logBeforeMethod(JoinPoint joinPoint) {
+    public void logBeforeCustomer(JoinPoint joinPoint) {
         System.out.println("called: " + joinPoint.getSignature().getName());
     }
 
     @AfterReturning(value = "execution(* com.example.ordermanagement.controller.CustomerController.*(..))", returning = "result")
-    public void logAfterMethod(JoinPoint joinPoint, Object result) {
+    public void logAfterCustomer(JoinPoint joinPoint, Object result) {
+        System.out.println("executed: " + joinPoint.getSignature().getName() + " | Return: " + result);
+    }
+
+    @Before("execution(* com.example.ordermanagement.controller.AddressController.*(..))")
+    public void logBeforeAddress(JoinPoint joinPoint) {
+        System.out.println("called: " + joinPoint.getSignature().getName());
+    }
+
+    @AfterReturning(value = "execution(* com.example.ordermanagement.controller.AddressController.*(..))", returning = "result")
+    public void logAfterAddress(JoinPoint joinPoint, Object result) {
+        System.out.println("executed: " + joinPoint.getSignature().getName() + " | Return: " + result);
+    }
+
+
+    @Before("execution(* com.example.ordermanagement.controller.OrderController.*(..))")
+    public void logBeforeOrder(JoinPoint joinPoint) {
+        System.out.println("called: " + joinPoint.getSignature().getName());
+    }
+
+    @AfterReturning(value = "execution(* com.example.ordermanagement.controller.OrderController.*(..))", returning = "result")
+    public void logAfterOrder(JoinPoint joinPoint, Object result) {
+        System.out.println("executed: " + joinPoint.getSignature().getName() + " | Return: " + result);
+    }
+
+    @Before("execution(* com.example.ordermanagement.controller.ProductController.*(..))")
+    public void logBeforeProductJoinPoint(JoinPoint joinPoint, Object result) {
+        System.out.println("called: " + joinPoint.getSignature().getName());
+    }
+
+    @AfterReturning(value = "execution(* com.example.ordermanagement.controller.ProductController.*(..))", returning = "result")
+    public void logAfterProduct(JoinPoint joinPoint, Object result) {
         System.out.println("executed: " + joinPoint.getSignature().getName() + " | Return: " + result);
     }
 }

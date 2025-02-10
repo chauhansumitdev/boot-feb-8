@@ -2,6 +2,7 @@ package com.example.ordermanagement.service;
 
 
 import com.example.ordermanagement.entity.Product;
+import com.example.ordermanagement.exception.ProductException;
 import com.example.ordermanagement.repository.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -25,11 +26,22 @@ public class ProductService {
     }
 
     public Product readProduct(UUID id){
-        return productRepository.findById(id).orElse(null);
+        Product product = productRepository.findById(id).orElse(null);
+
+        if(product == null){
+            throw new ProductException("Product does not exist");
+        }
+
+        return product;
     }
 
     public Product updateProduct(UUID id, Product product){
         Product existingProduct = productRepository.findById(id).orElse(null);
+
+
+        if(existingProduct == null){
+            throw new ProductException("Product does not exist");
+        }
 
         if(existingProduct != null){
             existingProduct.setName(product.getName());
