@@ -1,8 +1,11 @@
 package com.example.ordermanagement.service;
 
 
+import com.example.ordermanagement.dto.ProductRequestDTO;
+import com.example.ordermanagement.dto.ProductResponseDTO;
 import com.example.ordermanagement.entity.Product;
 import com.example.ordermanagement.exception.ProductException;
+import com.example.ordermanagement.mapper.ProductMapper;
 import com.example.ordermanagement.repository.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -20,9 +23,13 @@ public class ProductService {
     @Autowired
     private ProductRepository productRepository;
 
+    @Autowired
+    private ProductMapper productMapper;
 
-    public Product createProduct(Product product){
-        return productRepository.save(product);
+
+    public ProductResponseDTO createProduct(ProductRequestDTO product){
+        Product currentProduct = productMapper.toProduct(product);
+        return productMapper.toProductDTO(productRepository.save(currentProduct));
     }
 
     public Product readProduct(UUID id){

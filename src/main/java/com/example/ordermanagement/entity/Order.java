@@ -14,9 +14,7 @@ public class Order {
     @JsonProperty("id")
     private UUID id;
 
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     @JsonProperty("orderNumber")
-    @NotBlank(message = "Please enter the order number")
     private Long orderNumber;
 
     @JsonProperty("status")

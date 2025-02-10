@@ -1,11 +1,19 @@
 package com.example.ordermanagement.dto;
 
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotEmpty;
+
 public class CustomerRequestDTO {
 
+    @NotEmpty(message = "first name cannot be empty")
     private String firstName;
+    @NotEmpty(message = "last name cannot be empty")
     private String lastName;
+    @NotEmpty(message = "email cannot be empty")
     private String email;
+    @NotEmpty(message = "street cannot be empty")
     private String street;
+    @NotEmpty(message = "city cannot be empty")
     private String city;
 
     public CustomerRequestDTO(){}

@@ -29,6 +29,7 @@ public class OrderService {
         Customer get_customer = customerService.getCustomer(id);
 
         Order new_order = new Order();
+        new_order.setOrderNumber((long)(Math.random()*100));
         new_order.setStatus("INITIATED");
         new_order.setCustomer(get_customer);
 
@@ -46,24 +47,6 @@ public class OrderService {
         return order;
     }
 
-    public Order updateOrder(UUID id, Order order){
-        Order existingOrder = orderRepository.findById(id).orElse(null);
-
-        if(existingOrder == null){
-            throw new OrderException("Order does not exist");
-        }
-
-
-        if(existingOrder != null){
-            existingOrder.setOrderNumber(order.getOrderNumber());
-            existingOrder.setStatus(order.getStatus());
-            existingOrder.setCustomer(order.getCustomer());
-            orderRepository.save(existingOrder);
-        }
-
-        return existingOrder;
-    }
-
     public Order updateOrder(UUID id, String status){
         Order existingOrder = orderRepository.findById(id).orElse(null);
 
@@ -75,10 +58,9 @@ public class OrderService {
             throw new OrderException("Order already delivered");
         }
 
-        if(existingOrder != null){
-            existingOrder.setStatus(status);
-            orderRepository.save(existingOrder);
-        }
+        existingOrder.setStatus(status);
+        orderRepository.save(existingOrder);
+
 
         return existingOrder;
     }

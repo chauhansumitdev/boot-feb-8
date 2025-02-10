@@ -56,13 +56,11 @@ public class CustomerService {
             throw new CustomerException("Customer does not exit");
         }
 
-        if(existingCustomer != null){
-            existingCustomer.setFirstName(customer.getFirstName());
-            existingCustomer.setLastName(customer.getLastName());
-            existingCustomer.setEmail(customer.getEmail());
-            existingCustomer.setAddress(customer.getAddress());
-            customerRepository.save(existingCustomer);
-        }
+        existingCustomer.setFirstName(customer.getFirstName());
+        existingCustomer.setLastName(customer.getLastName());
+        existingCustomer.setEmail(customer.getEmail());
+        existingCustomer.setAddress(customer.getAddress());
+        customerRepository.save(existingCustomer);
 
         return existingCustomer;
     }

@@ -35,14 +35,9 @@ public class OrderController {
     }
 
 
-    @PostMapping("/v1/update/{id}/{status}")
-    public ResponseEntity<Order> updateOrder(@PathVariable UUID id, @PathVariable String status){
+    @PatchMapping("/v1/update/{id}/{status}")
+    public ResponseEntity<Order> updateOrder(@PathVariable UUID id, @PathVariable String status ){
         return new ResponseEntity<>(orderService.updateOrder(id, status), HttpStatus.OK);
-    }
-
-    @PutMapping("/v1/update/{id}")
-    public ResponseEntity<Order> updateOrder(@PathVariable UUID id, @RequestBody Order order){
-        return new ResponseEntity<>(orderService.updateOrder(id, order), HttpStatus.OK);
     }
 
     @DeleteMapping("/v1/delete/{id}")
@@ -52,7 +47,7 @@ public class OrderController {
         return ResponseEntity.noContent().build();
     }
 
-    @GetMapping("/v1/listOrderByStatus")
+    @GetMapping("/v1/get-by-status")
     public Page<Order> getOrdersByStatus(
             @RequestParam(defaultValue = "") String status,
             @RequestParam(defaultValue = "0") int page,

@@ -6,7 +6,9 @@ import com.example.ordermanagement.dto.CustomerResponseDTO;
 import com.example.ordermanagement.entity.Customer;
 import com.example.ordermanagement.exception.CustomerException;
 import com.example.ordermanagement.exception.ErrorResponse;
+import com.example.ordermanagement.pagination.CustomPage;
 import com.example.ordermanagement.service.CustomerService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
@@ -67,6 +69,8 @@ public class CustomerController {
         return customerService.getCustomers(firstName, email, page, size, sortBy);
     }
 
+
+    // testing endpoint
     @GetMapping("/v1/fetch-all")
     public List<Customer> getAllCustomer(){
         return customerService.getAllCustomers();
@@ -77,5 +81,10 @@ public class CustomerController {
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public ErrorResponse customerException(CustomerException ex) {
         return new ErrorResponse(ex.getMessage(), HttpStatus.BAD_REQUEST.value());
+    }
+
+    @GetMapping("/v1/testing")
+    public void testingEndpoint(CustomPage page){
+        System.out.println(page.getLimit()+" "+page.getOffset());
     }
 }

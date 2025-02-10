@@ -76,10 +76,9 @@ public class OrderProductService {
 
     public OrderResponseDTO getAllProductsInParticularOrder(UUID id) {
         Order retrieveOrder = orderService.readOrder(id);
-        Customer retriveCustomer = customerService.getCustomer(retrieveOrder.getCustomer().getId());
 
         List<OrderProduct> orderProducts = orderProductRepository.findByOrder(retrieveOrder);
 
-        return orderMapper.toOrderresponseDTO(retrieveOrder, retriveCustomer,orderProducts);
+        return orderMapper.toOrderresponseDTO(retrieveOrder,orderProducts);
     }
 }

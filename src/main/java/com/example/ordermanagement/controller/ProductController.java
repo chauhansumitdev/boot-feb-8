@@ -1,5 +1,7 @@
 package com.example.ordermanagement.controller;
 
+import com.example.ordermanagement.dto.ProductRequestDTO;
+import com.example.ordermanagement.dto.ProductResponseDTO;
 import com.example.ordermanagement.entity.Product;
 import com.example.ordermanagement.exception.AddressException;
 import com.example.ordermanagement.exception.ErrorResponse;
@@ -23,7 +25,7 @@ public class ProductController {
 
 
     @PostMapping("/v1/create")
-    public ResponseEntity<Product> createProduct(@RequestBody Product product) {
+    public ResponseEntity<ProductResponseDTO> createProduct(@RequestBody ProductRequestDTO product) {
         return new ResponseEntity<>(productService.createProduct(product), HttpStatus.CREATED);
     }
 
