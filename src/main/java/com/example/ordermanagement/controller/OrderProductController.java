@@ -1,5 +1,6 @@
 package com.example.ordermanagement.controller;
 
+import com.example.ordermanagement.dto.OrderResponseDTO;
 import com.example.ordermanagement.entity.Order;
 import com.example.ordermanagement.entity.OrderProduct;
 import com.example.ordermanagement.entity.Product;
@@ -47,7 +48,7 @@ public class OrderProductController {
     }
 
     @GetMapping("/v1/find/{id}")
-    public ResponseEntity<List<OrderProduct>> getAllByOrderId(@PathVariable UUID id) {
+    public ResponseEntity<OrderResponseDTO> getAllByOrderId(@PathVariable UUID id) {
         return new ResponseEntity<>(orderProductService.getAllProductsInParticularOrder(id), HttpStatus.OK);
     }
 }

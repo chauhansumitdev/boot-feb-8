@@ -1,5 +1,7 @@
 package com.example.ordermanagement.dto;
 
+import com.example.ordermanagement.entity.Customer;
+import com.example.ordermanagement.entity.Order;
 import com.example.ordermanagement.entity.Product;
 
 import java.util.List;
@@ -7,18 +9,34 @@ import java.util.UUID;
 
 public class OrderResponseDTO {
 
-    private UUID orderid;
+    private Order order;
+    private Customer customer;
     private Long orderNumber;
     private String status;
-
     private List<Product> products;
 
-    public UUID getId() {
-        return orderid;
+    public List<Product> getProducts() {
+        return products;
     }
 
-    public void setId(UUID id) {
-        this.orderid = id;
+    public void setProducts(List<Product> products) {
+        this.products = products;
+    }
+
+    public Order getOrder() {
+        return order;
+    }
+
+    public void setOrder(Order order) {
+        this.order = order;
+    }
+
+    public Customer getCustomer() {
+        return customer;
+    }
+
+    public void setCustomer(Customer customer) {
+        this.customer = customer;
     }
 
     public Long getOrderNumber() {
@@ -35,13 +53,5 @@ public class OrderResponseDTO {
 
     public void setStatus(String status) {
         this.status = status;
-    }
-
-    public List<Product> getProducts() {
-        return products;
-    }
-
-    public void setProducts(List<Product> products) {
-        this.products = products;
     }
 }

@@ -1,9 +1,12 @@
 package com.example.ordermanagement.service;
 
 
+import com.example.ordermanagement.dto.OrderResponseDTO;
+import com.example.ordermanagement.entity.Customer;
 import com.example.ordermanagement.entity.Order;
 import com.example.ordermanagement.entity.OrderProduct;
 import com.example.ordermanagement.entity.Product;
+import com.example.ordermanagement.mapper.OrderMapper;
 import com.example.ordermanagement.repository.OrderProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -24,8 +27,13 @@ public class OrderProductService {
     private OrderService orderService;
     @Autowired
     private ProductService productService;
+    @Autowired
+    private CustomerService customerService;
 
-    public OrderProduct createOrderProduct(@PathVariable UUID orderID, @PathVariable UUID productID){
+    @Autowired
+    private OrderMapper orderMapper;
+
+    public OrderProduct createOrderProduct(UUID orderID, UUID productID){
 
         Order get_order = orderService.readOrder(orderID);
         Product get_product = productService.readProduct(productID);
@@ -66,8 +74,12 @@ public class OrderProductService {
     }
 
 
-    public List<OrderProduct> getAllProductsInParticularOrder(UUID id) {
+    public OrderResponseDTO getAllProductsInParticularOrder(UUID id) {
         Order retrieveOrder = orderService.readOrder(id);
-        return orderProductRepository.findByOrder(retrieveOrder);
+        Customer retriveCustomer = customerService.getCustomer(retrieveOrder.getCustomer().getId());
+
+        List<OrderProduct> orderProducts = orderProductRepository.findByOrder(retrieveOrder);
+
+        return orderMapper.toOrderresponseDTO(retrieveOrder, retriveCustomer,orderProducts);
     }
 }
